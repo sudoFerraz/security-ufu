@@ -1,42 +1,3 @@
-alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVXYZ'
-
-class Rotor():
-	permutacoes = []
-	virada = ''
-	posicao = 'A'
-
-	def __init__(self, permutacoes, virada, setup):
-		i = alfabeto.index(setup)
-		permutacoes = permutacoes[i:] + permutacoes[:i]
-		self.permutacoes = [c for c in permutacoes]
-		self.virada = virada
-
-	#seta de acordo com a posicao atual no rotor e faz as permutacoes necessarias
-	def seta_posicao(self, posicao):
-		troca_posicao = alfabeto.index(posicao) - alfabeto.index(self.posicao)
-		self.posicao = posicao
-		self.permutacoes = self.permutacoes[troca_posicao:] + self.permutacoes[:troca_posicao]
-
-	#Faz a virada se chegar na posicao (1 volta)
-	def virada(self):
-		return True if self.virada == self.posicao else False
-
-
-	#Faz um passo do rotor modulo 26
-	def passo(self):
-		virada = self.virada()
-		self.permutacoes = self.permutacoes[1:] + self.permutacoes[:1]
-		self.posicao = alfabeto[(alfabeto.index(self.posicao) + 1) % 26]
-		if virada:
-			return True
-		else:
-			return False
-
-	def encripta_frente(self, c):
-		return self.permutacoes[alfabeto.index(c)]
-
-	def encripta_tras(self, c):
-		return alfabeto[self.permutacoes.index(c)]
 
 class Maquina():
 	rotores = []
@@ -99,3 +60,42 @@ class Maquina():
 		return out
 
 		
+alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVXYZ'
+
+class Rotor():
+	permutacoes = []
+	virada = ''
+	posicao = 'A'
+
+	def __init__(self, permutacoes, virada, setup):
+		i = alfabeto.index(setup)
+		permutacoes = permutacoes[i:] + permutacoes[:i]
+		self.permutacoes = [c for c in permutacoes]
+		self.virada = virada
+
+	#seta de acordo com a posicao atual no rotor e faz as permutacoes necessarias
+	def seta_posicao(self, posicao):
+		troca_posicao = alfabeto.index(posicao) - alfabeto.index(self.posicao)
+		self.posicao = posicao
+		self.permutacoes = self.permutacoes[troca_posicao:] + self.permutacoes[:troca_posicao]
+
+	#Faz a virada se chegar na posicao (1 volta)
+	def virada(self):
+		return True if self.virada == self.posicao else False
+
+
+	#Faz um passo do rotor modulo 26
+	def passo(self):
+		virada = self.virada()
+		self.permutacoes = self.permutacoes[1:] + self.permutacoes[:1]
+		self.posicao = alfabeto[(alfabeto.index(self.posicao) + 1) % 26]
+		if virada:
+			return True
+		else:
+			return False
+
+	def encripta_frente(self, c):
+		return self.permutacoes[alfabeto.index(c)]
+
+	def encripta_tras(self, c):
+		return alfabeto[self.permutacoes.index(c)]
